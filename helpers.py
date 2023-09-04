@@ -70,8 +70,8 @@ def rollback_on_error(route_func):
     def wrapper(*args, **kwargs):
         try:
             result = route_func(*args, **kwargs)
-            db.session.commit()
+            db.commit()
             return result
         except Exception as e:
-            db.session.rollback()
+            db.rollback()
     return wrapper
