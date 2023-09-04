@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from helpers import apology, login_required, is_email, check_caracter, get_books_info
+from helpers import apology, login_required, is_email, check_caracter, get_books_info, rollback_on_error
 from flask import jsonify
 
 
@@ -56,7 +56,8 @@ def page_not_found(e):
 def index():
     return render_template("index.html")
 
-@app.route("/register", methods=["GET", "POST"])    
+@app.route("/register", methods=["GET", "POST"])   
+@rollback_on_error 
 def register():
     if request.method == "POST":
         username = request.form.get("username")
@@ -108,7 +109,8 @@ def register():
     else:
         return render_template("register.html")
     
-@app.route("/login", methods=["GET", "POST"])  
+@app.route("/login", methods=["GET", "POST"]) 
+@rollback_on_error 
 def login(): 
       
     #Forget any user_id
@@ -144,6 +146,7 @@ def logout():
     return redirect("/")
 
 @app.route("/search", methods=["GET", "POST"])
+@rollback_on_error
 @login_required
 def search():
     page = request.args.get(get_page_parameter(), type=int, default=1)
@@ -209,6 +212,7 @@ def search():
         return render_template("index.html", books=books_to_display, imageBooks=imageBooks, pagination=pagination)
     
 @app.route("/book/<string:isbn>", methods=["GET", "POST"])
+@rollback_on_error
 @login_required
 def book(isbn):
     if request.method == "POST":
@@ -283,6 +287,7 @@ def book(isbn):
    
    
 @app.route("/api/<string:isbn>")
+@rollback_on_error
 @login_required 
 def api(isbn):
     if not isbn:
@@ -307,6 +312,7 @@ def api(isbn):
     })
     
 @app.route("/reviews/<string:username>")
+@rollback_on_error
 @login_required
 def reviews(username):
     query = text("SELECT review, books.title, users.email, users.username FROM reviews JOIN books ON reviews.isbn = books.isbn JOIN users ON users.id = user_id WHERE user_id = :user_id")

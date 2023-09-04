@@ -1,11 +1,19 @@
 import os
 import urllib.parse
-from flask import redirect, render_template, request, session
+from flask import redirect, render_template, request, session, jsonify
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import scoped_session, sessionmaker
 from functools import wraps
 from colorama import Fore, Style
 from termcolor import colored
 import requests
+from dotenv import load_dotenv
 import re
+
+load_dotenv()
+
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
 
 
 def apology(message, code=400):
@@ -55,3 +63,19 @@ def get_books_info(isbn):
         return None
     print(Fore.GREEN + "Book info found" + Style.RESET_ALL)
     return responsive
+
+
+def rollback_on_error(route_func):
+    @wraps(route_func)
+    def wrapper(*args, **kwargs):
+        try:
+            result = route_func(*args, **kwargs)
+            db.session.commit()
+            return result
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+        finally:
+            db.session.close()
+
+    return wrapper
