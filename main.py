@@ -311,7 +311,7 @@ def api(isbn):
 def reviews(username):
     query = text("SELECT review, books.title, users.email, users.username FROM reviews JOIN books ON reviews.isbn = books.isbn JOIN users ON users.id = user_id WHERE user_id = :user_id")
     reviews = db.execute(query, {"user_id": session["user_id"]}).fetchall()
-    return render_template("reviews.html", reviews=reviews)
+    return render_template("reviews.html", reviews=reviews, username=username)
     
 if __name__ == '__main__':
     with app.app_context():
