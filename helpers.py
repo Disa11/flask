@@ -10,9 +10,6 @@ import requests
 from dotenv import load_dotenv
 import re
 
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-
 load_dotenv()
 
 engine = create_engine(os.getenv("DATABASE_URL"))
@@ -77,8 +74,4 @@ def rollback_on_error(route_func):
             return result
         except Exception as e:
             db.session.rollback()
-            return jsonify({'error': str(e)}), 500
-        finally:
-            db.session.close()
-
     return wrapper
