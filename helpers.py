@@ -10,6 +10,9 @@ import requests
 from dotenv import load_dotenv
 import re
 
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+
 load_dotenv()
 
 engine = create_engine(os.getenv("DATABASE_URL"))
