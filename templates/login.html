@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Log In{% endblock %}
+
+{% block body %}
+<div class="R_L_container tagvisibility">
+
+    <div class="wrapper">
+        <form action="/login" method="post">
+            <h1>Log In</h1>
+
+            <div class="input-box">
+                <input type="text" placeholder="Username or Email" pattern="^[^&quot;,&#x2F;,&#x21;,&#x2B;,&#x2D;,&#x27;,&#x40;,&#x5D;,&#x26;,&#x3A;,&#x5C;]*$" name="username" required>
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div class="input-box">
+                <input type="password" placeholder="Password" name="password" required>
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <div class="remember-forgot">
+                <label><input type="checkbox">Remember me</label>
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn">Log In</button>
+
+            <div class="register-link">
+                <p>Don't have accounts? <a href="{{ url_for('register') }}">Register</a></p>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

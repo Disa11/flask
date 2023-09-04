@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="R_L_container tagvisibility">
+
+    <div class="wrapper">
+        <form action="/register" method="post">
+            <h1>Register</h1>
+
+            <div class="input-box">
+                <input type="text" placeholder="Username" name="username" pattern="^[^&quot;,&#x2F;,&#x21;,&#x2B;,&#x2D;,&#x27;,&#x40;,&#x5D;,&#x26;,&#x3A;,&#x5C;]*$" required>
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div class="input-box">
+                <input type="email" placeholder="Mail" pattern="[a-zA-Z0-9._%+-]+@gmail\.com$" name="mail" required>
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+
+            <div class="input-box">
+                <input type="password" placeholder="Password" name="password" required>
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <div class="input-box">
+                <input type="password" placeholder="Confirm Password" name="confirm_password" required>
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <div class="remember-forgot">
+                <label><input type="checkbox" name="autologin">Auto Log In</label>
+            </div>
+
+            <button type="submit" class="btn">Register</button>
+
+            <div class="register-link">
+                <p>Already have account? <a href="{{ url_for('login') }}">Log In</a></p>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

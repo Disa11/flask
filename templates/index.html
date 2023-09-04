@@ -1,9 +1,51 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Hello World</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-  </body>
-</html>
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<div class="R_L_container tagvisibility" style="margin-top: 5% !important; margin-bottom: 20%">
+    <div class="knauth_search">
+        <form action="/search" method="post">
+            <input class="knauth_search_text" type="search" placeholder="Search for a book" aria-label="Search" required
+                name="search">
+            <button type="submit" class="knauth_search_button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+    </div>
+</div>
+
+{% if books %}
+
+<section class="tagvisibility pt-5">
+    <div class="container">
+        <div class="container py-5">
+            <h1 class="text-center">Results</h1>
+            <div class="row row-cols-1 row-cols-md-6 g-4 py-5 justify-content-center">
+
+                {% for book in books %}
+
+                <div class="col">
+                    <div class="card" style="border-radius: 20px;  width: 128px !important;">
+                        <a href="book/{{book.isbn}}">
+                            <img src="{{imageBooks[book.title]}}" class="card-img-top" alt="..." style="overflow: hidden; border-radius: 10px">
+                            
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size:1.3rem">{{ book.title }}</h5>
+                                <h4 class="card-title" style="font-size:1.1rem" >{{ book.author }}</h4>
+                                <h4 class="card-title" style="font-size:0.9rem">{{ book.year }}</h4>
+                                <p class="card-text" style="font-size:0.7rem">{{book.isbn}}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="pagination">
+                {{ pagination.links }}
+              </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

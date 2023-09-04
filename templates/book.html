@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+{% block title %}Book{% endblock %}
+
+{% block body %}
+<div class="container" style="margin-bottom: 10%;">
+    <div class="kgrid-layout tagvisibility">
+        <div class="c1" style="width: 100%;">
+            <div class="cardbox">
+                <div class="wrapper">
+                    <img src="{{image}}" alt=""
+                        style="height: 192px !important; width: 128px !important">
+                </div>
+            </div>
+        </div>
+        <div class="wrapper caja c2">
+            <h2>{{title}}</h2><br>
+            <h4>
+                <p>{{description}}</p>
+            </h4>
+
+
+        </div>
+        <div class="wrapper caja c3">
+            <h4>Details</h4><br>
+            {% if authors_count == 1%}
+            <h6>Author: {{author[0]}}</h6>
+            {% else %}
+            <h6>Authors: </h6>
+            {% for i in authors_count %}
+            {% if i == (authors_count - 1) %}
+            <h6> {{author[i]}}</h6>
+            {% else %}
+            <h6> {{author[i]}},</h6>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            <br>
+            <h6>Year: {{year}}</h6><br>
+            <h6>Numbers of pages: {{page_count}}</h6><br>
+
+            {% if category_count == 1 %}
+            <h6>Category: {{category[0]}}</h6>
+            {% else %}
+            <h6>Category: </h6>
+            {% for i in category_count %}
+            {% if i == (category_count - 1) %}
+            <h6> {{category[i]}}</h6>
+            {% else %}
+            <h6> {{category[i]}},</h6>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            <br>
+
+            <h6>ISBN: {{isbn}}</h6><br>
+            <h6>Numbers of reviews on the page: {{review_count}}</h6><br>
+            <h6>Rating on this site: {{average_score}}</h6><br>
+            <h6>Rating on Goodreads: {{average_rating}}</h6><br>
+            <h6>Number of rating on Goodreads: {{ratings_count}}</h6><br>
+
+        </div>
+        <div class="wrapper caja c4">
+
+            <h4>Tell us what you think of the book</h4><br>
+
+            <form action="/book/{{isbn}}" method="post">
+                <div class="R_L_container tagvisibility"
+                    style="margin-top: 5% !important; margin-bottom: 8% !important">
+                    <div class="knauth_search">
+                        <input class="knauth_search_text" type="search" placeholder="Submit a book review."
+                            aria-label="Search" required name="review">
+                    </div>
+
+                </div>
+                <br>
+                <h4>give a score to the book</h4>
+
+                <div class="k_start justify-content-center">
+                    <div class="rating" style="justify-content: space-between !important;"><!--
+                            --><input name="rating" id="e5" type="radio" value="5"></a><label for="e5"><i class="bi bi-star-fill star"></i></label><!--
+                            --><input name="rating" id="e4" type="radio" value="4"></a><label for="e4"><i class="bi bi-star-fill star"></i></label><!--
+                            --><input name="rating" id="e3" type="radio" value="3"></a><label for="e3"><i class="bi bi-star-fill star"></i></label><!--
+                            --><input name="rating" id="e2" type="radio" value="2"></a><label for="e2"><i class="bi bi-star-fill star"></i></label><!--
+                            --><input name="rating" id="e1" type="radio" value="1"></a><label for="e1"><i class="bi bi-star-fill star"></i></label>
+                    </div>
+                </div>
+
+
+                <div class="knauth_search">
+                    <button type="submit" class="knauth_search_button" style="justify-content: flex-end !important;"><i
+                            class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </form>
+        </div>
+
+        <div class="wrapper caja c5">
+            <h4>Other reviews:</h4><br>
+            {% if not book_reviews %}
+            <div class="R_L_container tagvisibility" style="width: 100%;">
+                <div class="R_L_container tagvisibility">
+                    <h1 style="font-weight: bold;"><i class="fa-regular fa-face-frown"
+                            style="width: auto; height: auto;"></i>This book does not have any reviews yet.</h1>
+                </div>
+            </div>
+            {% else %}
+            <div class="wraper" style=" padding: 15px ;background-color: rgba(0, 0, 0, 0.616); border-radius: 10px">
+                <div class="wraper">
+                    <div class="container">
+                        <div class="row">
+
+                            {% for user in book_reviews %}
+                            <div class="col-md-6">
+                                <div class="tweet">
+                                    <div class="tweet-header">
+                                        <img src="../static/img/user_icon.jpg" alt="Avatar" class="tweet-avatar">
+                                        <h5 class="mb-0">{{user.name}}</h5>
+                                    </div>
+                                    <p>{{user.review}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

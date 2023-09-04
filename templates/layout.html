@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../static/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>{% block title %}{% endblock %} </title>
+</head>
+
+<body class="hidden" id="body_id">
+    <div id="preloader">
+        <div class="kanuthcontainer">
+
+            <div class="coast">
+                <div class="wave-rel-wrap">
+                    <div class="wave"></div>
+                </div>
+            </div>
+            <div class="coast delay">
+                <div class="wave-rel-wrap">
+                    <div class="wave delay"></div>
+                </div>
+            </div>
+            <div class="text text-k">k</div>
+            <div class="text text-n">n</div>
+            <div class="text text-a">a</div>
+            <div class="text text-u">u</div>
+            <div class="text text-t">t</div>
+            <div class="text text-h">h</div>
+
+        </div>
+    </div>
+
+    <header>
+        <!-- Navbar -->
+        <nav class="tagvisibility  navbar navbar-expand-lg navbar-dark bg-trasnparent ">
+            <div class="container">
+                <a class="navbar-brand fs-4" href="{{ url_for('index') }}"><img src="../static/img/cat_dallE.jpg" alt="Logo"
+                        class="logo"></a>
+                <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasDarkNavbar"
+                    aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div class="offcanvas-header text-white border-bottom">
+                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Disa11</h5>
+
+                        <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body tagvisibility">
+                        {% if session.user_id %}
+                        <form class="d-flex  ml-3" role="search" action="/search" method="post">
+                            <input class="form-control me-2" type="search" placeholder="Search for a book"
+                                aria-label="Search" name="search" required>
+                            <button class="btn  btn-transparent btn-outline-success font-weight-bold" type="submit">Search</button>
+                        </form>
+                        {% endif %}
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
+                            </li>
+                            {% if not session.user_id %}
+                            <li class="nav-item">
+                                <a class="nav-link mx-2" href="{{ url_for('login') }}">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-2" href="{{ url_for('register') }}">Register</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item dropdown mx2">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    User
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li><a class="dropdown-item" href="/reviews/{{session.username}}">Reviews</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ url_for('logout')}}">Log out</a></li>
+                                </ul>
+                            </li>
+                            {% endif %}
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+
+    {% block body %}{% endblock %}
+
+
+    <footer class="tagvisibility bg-dark text-white pt-5 pb-4">
+        <div class="container text-center text-md-left">
+            <div class="row text-center text-md-left">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Disa11</h5>
+                    <p>Soy estudiante de ingeniería electrónica de 2do año, siempre dispuesto a aprender cosas nuevas.
+                        Me gusta mucho la música, el francés y enseñar lo que sé. idk Lorem Ipsum.</p>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Formación académica</h5>
+                    <p>
+                        <a href="https://www.uni.edu.ni/#/" class="text-white" style="text-decoration: none;"
+                            target="_blank">UNI</a>
+                    </p>
+                    <p>
+                        <a href="https://www.facebook.com/CTpedroarauzgranada?mibextid=ZbWKwL" class="text-white"
+                            style="text-decoration: none;" target="_blank">INTECNA-Granada</a>
+                    </p>
+                    <p>
+                        <a href="https://code-fu.net.ni/" class="text-white" style="text-decoration: none;"
+                            target="_blank">CS50x</a>
+                    </p>
+
+                </div>
+
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Referencias.</h5>
+                    <p>
+                        <a href="https://gruposiasa.com/" class="text-white" style="text-decoration: none;"
+                            target="_blank">SIASA</a>
+                    </p>
+                    <p>
+                        <a href="https://www.cargill.com.hn/es/sobre" class="text-white" style="text-decoration: none;"
+                            target="_blank">Cargill</a>
+                    </p>
+                    <p>
+                        <a href="https://portaldematematica.com/nicaragua/" class="text-white"
+                            style="text-decoration: none;" target="_blank">Portal Math</a>
+                    </p>
+
+                </div>
+
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contacto</h5>
+                    <p>
+                        <i class="fas fa-home mr-3"></i>Granada/Masaya
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope mr-3"></i>dknauth@code-fu.net.ni
+                    </p>
+                    <p>
+                        <i class="fas fa-phone mr-3"></i>82017614
+                    </p>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+
+            <div class="row align-items-center">
+                <div class="cold-md-7 col-lg-8">
+                    <p>
+                        Copyright &#xA9; 2023 All rights reserved by:
+                        <a href="#" style="text-decoration: none;">
+                            <strong class="text-warning">Disa11</strong>
+                        </a>
+                    </p>
+                </div>
+
+                <div class="cold-md-5 col-lg-4">
+                    <div class="text-center text-md-right">
+                        <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                                <a href="https://www.facebook.com/david.knauth.7?mibextid=ZbWKwL"
+                                    class="btn-floating btn-sm text-white" style="font-size: 23px;" target="_blank">
+                                    <i class="fab fa-facebook"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://github.com/Disa11" class="btn-floating btn-sm text-white"
+                                    style="font-size: 23px;" target="_blank">
+                                    <i class="fab fa-github"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://instagram.com/dathly_knauth?utm_source=qr&igshid=NGExMmI2YTkyZg%3D%3D"
+                                    class="btn-floating btn-sm text-white" style="font-size: 23px;" target="_blank">
+                                    <i class="fab fa-instagram"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
+
+
+    <script src="../static/script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

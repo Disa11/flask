@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}Apology{% endblock %}
+
+{% block body %}
+
+<div class="R_L_container tagvisibility" style="width: 100%;">
+    <h1><i class="fa-regular fa-face-frown" style="width: 300%; height: 300%;"></i></h1>
+    
+    {% if message %}
+    <div class="R_L_container tagvisibility">
+        <h1 style="font-weight: bold;">{{ message }}</h1>
+    </div>
+    
+    {% elif error %}
+    <div class="R_L_container tagvisibility" >
+        <h1 style="font-weight: bold;">Sorry, that was not expected. Error: {{ error }}</h1>
+    </div>
+    {% endif %}
+    
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+<div class="container" style="margin-bottom: 10%;">
+    <div class="kgrid-layout tagvisibility">
+        <div class="c1" style="width: 100%;">
+            <img src="../static/img/user_icon.jpg" alt="User icon" style="border-radius: 55px; overflow: hidden; width:80%; height: 80%;">
+        </div>
+        <div class="wrapper caja c2">
+            <h2>{{reviews[0].username}} <br>{{reviews[0].email}}</h2><br>
+            <h4>
+                <p>{{description}}</p>
+            </h4>
+        </div>
+
+        <div class="wrapper caja c5">
+            <h4>My reviews:</h4><br>
+            {% if not reviews %}
+            <div class="R_L_container tagvisibility" style="width: 100%;">
+                <div class="R_L_container tagvisibility">
+                    <h1 style="font-weight: bold;"><i class="fa-regular fa-face-frown"
+                            style="width: auto; height: auto;"></i>You haven't written any review yet.</h1>
+                </div>
+            </div>
+            {% else %}
+            <div class="wraper" style=" padding: 15px ;background-color: rgba(0, 0, 0, 0.616); border-radius: 10px">
+                <div class="wraper">
+                    <div class="container">
+                        <div class="row">
+                            {% for user in reviews %}
+                            <div class="col-md-6">
+                                <div class="tweet">
+                                    <div class="tweet-header">
+                                        <img src="../static/img/user_icon.jpg" alt="Avatar" class="tweet-avatar">
+                                        <h5 class="mb-0">{{user.title}}</h5>
+                                    </div>
+                                    <p>{{user.review}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
