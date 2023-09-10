@@ -73,5 +73,6 @@ def rollback_on_error(route_func):
             db.commit()
             return result
         except Exception as e:
+            print(Fore.RED + e + Style.RESET_ALL)
             db.rollback()
     return wrapper
