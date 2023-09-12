@@ -254,8 +254,15 @@ def book(isbn):
         description = responsive["items"][0]["volumeInfo"]["description"]
         page_count = responsive["items"][0]["volumeInfo"]["pageCount"]
         category = responsive["items"][0]["volumeInfo"]["categories"] #lista
-        average_rating = responsive["items"][0]["volumeInfo"]["averageRating"]
-        ratings_count = responsive["items"][0]["volumeInfo"]["ratingsCount"]
+        try:
+            average_rating = responsive["items"][0]["volumeInfo"]["averageRating"]
+            ratings_count = responsive["items"][0]["volumeInfo"]["ratingsCount"]
+        except:
+            average_rating = 0
+            ratings_count = 0
+            print(Fore.RED + "No average rating found" + Style.RESET_ALL)
+            print(Fore.RED + "No ratings count found" + Style.RESET_ALL)
+            
         category_count = len(category)
         authors_count = len(author)
 
