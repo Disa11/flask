@@ -1,20 +1,19 @@
 import os
 import urllib.parse
-from flask import redirect, render_template, request, session, jsonify
-from sqlalchemy import create_engine, text
+from flask import redirect, render_template, request, session
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import create_engine
 from functools import wraps
 from colorama import Fore, Style
 from termcolor import colored
-import requests
 from dotenv import load_dotenv
+import requests
 import re
 
 load_dotenv()
 
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
-
 
 def apology(message, code=400):
     """Render message as an apology to user."""
@@ -63,7 +62,6 @@ def get_books_info(isbn):
         return None
     print(Fore.GREEN + "Book info found" + Style.RESET_ALL)
     return responsive
-
 
 def rollback_on_error(route_func):
     @wraps(route_func)
