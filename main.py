@@ -56,8 +56,8 @@ def page_not_found(e):
 def index():
     return render_template("index.html")
 
-@app.route("/register", methods=["GET", "POST"])   
-@rollback_on_error 
+@app.route("/register", methods=["GET", "POST"])  
+@rollback_on_error  
 def register():
     if request.method == "POST":
         username = request.form.get("username")
@@ -109,10 +109,9 @@ def register():
     else:
         return render_template("register.html")
     
-@app.route("/login", methods=["GET", "POST"]) 
-@rollback_on_error 
-def login(): 
-      
+@app.route("/login", methods=["GET", "POST"])  
+@rollback_on_error
+def login():      
     #Forget any user_id
     session.clear()
      
@@ -146,8 +145,8 @@ def logout():
     return redirect("/")
 
 @app.route("/search", methods=["GET", "POST"])
-@rollback_on_error
 @login_required
+@rollback_on_error
 def search():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 11  # Número de elementos por página
@@ -212,8 +211,8 @@ def search():
         return render_template("index.html", books=books_to_display, imageBooks=imageBooks, pagination=pagination)
     
 @app.route("/book/<string:isbn>", methods=["GET", "POST"])
-@rollback_on_error
 @login_required
+@rollback_on_error
 def book(isbn):
     if request.method == "POST":
         rating = int(request.form.get("rating"))
@@ -266,7 +265,6 @@ def book(isbn):
         category_count = len(category)
         authors_count = len(author)
 
-	    #pasarle tambien en una variable authors_count la cantidad de authores xd igual con las categorias xd category_count
         query = text("SELECT review, rating, users.username FROM reviews JOIN users ON users.id = reviews.user_id WHERE isbn = :isbn")
         reviews = db.execute(query, {"isbn": isbn}).fetchall()
         
@@ -294,8 +292,8 @@ def book(isbn):
    
    
 @app.route("/api/<string:isbn>")
-@rollback_on_error
 @login_required 
+@rollback_on_error
 def api(isbn):
     if not isbn:
         return jsonify({"error": "Invalid isbn"}), 422
@@ -319,8 +317,8 @@ def api(isbn):
     })
     
 @app.route("/reviews/<string:username>")
-@rollback_on_error
 @login_required
+@rollback_on_error
 def reviews(username):
     query = text("SELECT review, books.title, users.email, users.username FROM reviews JOIN books ON reviews.isbn = books.isbn JOIN users ON users.id = user_id WHERE user_id = :user_id")
     reviews = db.execute(query, {"user_id": session["user_id"]}).fetchall()
@@ -328,7 +326,7 @@ def reviews(username):
     try:
         email = reviews[0].email
     except Exception as e:
-        print(e)
+        print(Fore.RED + f"No email found {e}" + Style.RESET_ALL)
         email = ""
     
     return render_template("reviews.html", reviews=reviews, username=username, email=email)
