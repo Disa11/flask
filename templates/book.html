@@ -57,8 +57,13 @@
             <h6>ISBN: {{isbn}}</h6><br>
             <h6>Numbers of reviews on the page: {{review_count}}</h6><br>
             <h6>Rating on this site: {{average_score}}</h6><br>
+
+            {% if average_rating == 0 %}
+            <h6>This book does not have a Goodreads rating</h6><br>
+            {% else %}
             <h6>Rating on Goodreads: {{average_rating}}</h6><br>
             <h6>Number of rating on Goodreads: {{ratings_count}}</h6><br>
+            {% endif %}
 
         </div>
         <div class="wrapper caja c4">
